@@ -1,13 +1,15 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {ActivityIndicator, FlatList} from 'react-native';
 import {PokemonsListItem} from '../PokemonsListItem';
 import {usePaginatedPokemons} from './PokemonsList.queries';
 
 interface PokemonsListProps {}
 
 export const PokemonsList: React.FC<PokemonsListProps> = () => {
-  const {pokemons, fetchNextPage} = usePaginatedPokemons();
-
+  const {pokemons, isFetchingNextPage, fetchNextPage} = usePaginatedPokemons();
+  const renderSpinner = () => {
+    return <ActivityIndicator />;
+  };
   return (
     <>
       <FlatList
@@ -19,6 +21,7 @@ export const PokemonsList: React.FC<PokemonsListProps> = () => {
         onEndReached={() => {
           fetchNextPage();
         }}
+        ListFooterComponent={isFetchingNextPage ? renderSpinner : null}
       />
     </>
   );
