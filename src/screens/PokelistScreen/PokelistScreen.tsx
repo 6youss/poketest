@@ -1,16 +1,16 @@
 import React from 'react';
-import {Text} from 'react-native';
-import {usePokemons} from './PokelistScreen.queries';
+import {SafeAreaView, View} from 'react-native';
+import {PokemonsList} from '../../components';
+import {styles} from './PokelistScreen.styles';
 
 export const PokelistScreen = () => {
-  const {queriesResult} = usePokemons();
-
   return (
     <>
-      <Text>PokelistScreen</Text>
-      {queriesResult.map(query => {
-        return <Text>{query.data?.name} </Text>;
-      })}
+      <SafeAreaView>
+        <View style={styles.pokeListContainer}>
+          <PokemonsList />
+        </View>
+      </SafeAreaView>
     </>
   );
 };

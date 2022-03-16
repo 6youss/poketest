@@ -12,15 +12,24 @@ export interface PokemonSprites {
   front_shiny_female?: string;
 }
 
-export interface PokemonDTO {
+interface GameIndex {
+  game_index: number;
+  version: {
+    name: string;
+    url: string;
+  };
+}
+
+export interface Pokemon {
   id: number;
   name: string;
   sprites: PokemonSprites;
+  game_indices: GameIndex[];
 }
 
 export async function fetchOnePokemon(url: string) {
   const res = await fetch(url);
-  const pokemon: PokemonDTO = await res.json();
+  const pokemon: Pokemon = await res.json();
   return pokemon;
 }
 
