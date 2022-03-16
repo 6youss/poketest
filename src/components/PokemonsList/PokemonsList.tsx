@@ -1,16 +1,26 @@
 import React from 'react';
 import {ActivityIndicator, FlatList} from 'react-native';
 import {PokemonsListItem} from '../PokemonsListItem';
-import {usePaginatedPokemons} from './PokemonsList.queries';
+import {
+  GameIndexSortOptions,
+  usePaginatedPokemons,
+} from './PokemonsList.queries';
 import {styles} from './PokemonsList.styles';
 
-interface PokemonsListProps {}
+interface PokemonsListProps {
+  gameIndexSortValue?: GameIndexSortOptions;
+}
 
-export const PokemonsList: React.FC<PokemonsListProps> = () => {
-  const {pokemons, isFetchingNextPage, fetchNextPage} = usePaginatedPokemons();
+export const PokemonsList: React.FC<PokemonsListProps> = ({
+  gameIndexSortValue,
+}) => {
+  const {pokemons, isFetchingNextPage, fetchNextPage} =
+    usePaginatedPokemons(gameIndexSortValue);
+
   const renderSpinner = () => {
-    return <ActivityIndicator />;
+    return <ActivityIndicator size={30} />;
   };
+
   return (
     <>
       <FlatList
