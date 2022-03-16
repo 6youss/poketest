@@ -2,7 +2,7 @@ export interface RessourceListItem {
   name: string;
   url: string;
 }
-export interface RessourceList {
+export interface Pagination {
   count: number;
   next?: string;
   previous?: string;

@@ -1,6 +1,5 @@
-import {useQueries, useQuery} from 'react-query';
-import {RessourceList} from '../../types';
-
+import {useInfiniteQuery} from 'react-query';
+import {Pagination} from '../../types';
 export interface PokemonSprites {
   back_default?: string;
   back_female?: string;
@@ -12,7 +11,7 @@ export interface PokemonSprites {
   front_shiny_female?: string;
 }
 
-interface GameIndex {
+export interface GameIndex {
   game_index: number;
   version: {
     name: string;
@@ -33,28 +32,32 @@ export async function fetchOnePokemon(url: string) {
   return pokemon;
 }
 
-export async function fetchPokemonRessourceList() {
-  const res = await fetch('https://pokeapi.co/api/v2/pokemon/');
-  const ressourceList: RessourceList = await res.json();
-  return ressourceList;
+export interface PaginatedPokemons {
+  pagination: Pagination;
+  pokemons: Pokemon[];
 }
 
-export function usePokemons() {
-  const {data: ressourceList} = useQuery(['pokemons-ressource-list'], () =>
-    fetchPokemonRessourceList(),
+async function fetchPokemons(url: string): Promise<PaginatedPokemons> {
+  const pagination: Pagination = await (await fetch(url)).json();
+  const pokemons = await Promise.all(
+    pagination.results.map(result => fetchOnePokemon(result.url)),
   );
-  const results = ressourceList?.results || [];
+  return {pagination, pokemons};
+}
 
-  const pokemonsQueries = useQueries(
-    results.map(item => ({
-      queryKey: ['pokemon', item.url],
-      queryFn: () => fetchOnePokemon(item.url),
-      enabled: results.length > 0,
-    })),
-  );
+export function usePaginatedPokemons() {
+  const query = useInfiniteQuery({
+    queryKey: ['pokemons'],
+    queryFn: ({pageParam = 'https://pokeapi.co/api/v2/pokemon/'}) => {
+      return fetchPokemons(pageParam);
+    },
+    getNextPageParam: (lastPage: PaginatedPokemons) => {
+      return lastPage.pagination.next ?? undefined;
+    },
+  });
 
   return {
-    pagination: ressourceList,
-    queriesResult: pokemonsQueries,
+    ...query,
+    pokemons: query.data?.pages?.map(page => page.pokemons).flat() || [],
   };
 }

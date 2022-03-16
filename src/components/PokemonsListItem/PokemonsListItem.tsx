@@ -21,7 +21,6 @@ export const PokemonsListItem: React.FC<PokemonsListItemProps> = ({
           style={styles.pokeImage}
         />
         <Text>{pokemon.name}</Text>
-        <Text>{JSON.stringify(pokemon.game_indices)}</Text>
       </View>
     </>
   );

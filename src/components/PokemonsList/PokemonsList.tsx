@@ -1,20 +1,23 @@
 import React from 'react';
 import {FlatList} from 'react-native';
 import {PokemonsListItem} from '../PokemonsListItem';
-import {usePokemons} from './PokemonsList.queries';
+import {usePaginatedPokemons} from './PokemonsList.queries';
 
 interface PokemonsListProps {}
 
 export const PokemonsList: React.FC<PokemonsListProps> = () => {
-  const {queriesResult} = usePokemons();
+  const {pokemons, fetchNextPage} = usePaginatedPokemons();
 
   return (
     <>
       <FlatList
-        data={queriesResult.filter(q => !!q.data)}
-        keyExtractor={item => 'pokemon-' + item.data?.id}
+        data={pokemons}
+        keyExtractor={item => 'pokemon-' + item?.id}
         renderItem={({item}) => {
-          return <PokemonsListItem key={item.data?.id} pokemon={item.data!} />;
+          return <PokemonsListItem pokemon={item!} />;
+        }}
+        onEndReached={() => {
+          fetchNextPage();
         }}
       />
     </>
