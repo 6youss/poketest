@@ -4,13 +4,13 @@ export const styles = StyleSheet.create({
   container: {
     width: '100%',
     alignItems: 'center',
-    padding: 20,
+    padding: 7,
     backgroundColor: '#DDD',
     borderRadius: 20,
     marginVertical: 20,
   },
   pokeImage: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: 150,
   },
 });
