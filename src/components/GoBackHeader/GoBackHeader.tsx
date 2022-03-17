@@ -13,6 +13,7 @@ export const GoBackHeader: React.FC<GoBackHeaderProps> = ({
   return (
     <View style={[styles.container, {paddingTop: top}]}>
       <Pressable
+        testID="goBackButton"
         style={styles.goBackButton}
         onPress={() => {
           onGoBack();

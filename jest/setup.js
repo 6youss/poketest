@@ -1,5 +1,7 @@
+import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 import 'react-native-gesture-handler/jestSetup';
 
+jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 jest.mock('react-native-reanimated', () => {
   const Reanimated = require('react-native-reanimated/mock');
 
@@ -14,9 +16,3 @@ jest.mock('react-native-reanimated', () => {
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 global.__reanimatedWorkletInit = jest.fn();
-
-jest.mock('react-navigation-shared-element', () => {
-  return {
-    createSharedElementStackNavigator: jest.fn(),
-  };
-});
