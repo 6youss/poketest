@@ -11,6 +11,16 @@ export const styles = StyleSheet.create({
   },
   pokeImage: {
     width: '100%',
-    height: 150,
+    height: 130,
+  },
+  pokeName: {
+    fontSize: 19,
+    textTransform: 'capitalize',
+    fontWeight: '500',
+  },
+  pokeIndex: {
+    marginVertical: 7,
+    opacity: 0.4,
+    fontWeight: 'bold',
   },
 });

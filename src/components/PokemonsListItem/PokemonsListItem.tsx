@@ -20,8 +20,10 @@ export const PokemonsListItem: React.FC<PokemonsListItemProps> = ({
           resizeMode="contain"
           style={styles.pokeImage}
         />
-        <Text>{pokemon.name}</Text>
-        <Text>{pokemon.game_indices[0].game_index}</Text>
+        <Text style={styles.pokeName}>{pokemon.name}</Text>
+        <Text style={styles.pokeIndex}>
+          #{pokemon.game_indices[0].game_index}
+        </Text>
       </View>
     </>
   );
