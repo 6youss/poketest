@@ -1,5 +1,6 @@
 import React from 'react';
 import {Image, Pressable, Text, ViewStyle} from 'react-native';
+import {SharedElement} from 'react-navigation-shared-element';
 import {Pokemon} from '../PokemonsList/PokemonsList.queries';
 import {styles} from './PokemonsListItem.styles';
 
@@ -21,11 +22,13 @@ export const PokemonsListItem: React.FC<PokemonsListItemProps> = ({
   return (
     <>
       <Pressable style={[styles.container, style]} onPress={handlePress}>
-        <Image
-          source={{uri: pokemon.sprites.front_default}}
-          resizeMode="contain"
-          style={styles.pokeImage}
-        />
+        <SharedElement id={`pokemon.${pokemon.id}.photo`}>
+          <Image
+            source={{uri: pokemon.sprites.front_default}}
+            resizeMode="contain"
+            style={styles.pokeImage}
+          />
+        </SharedElement>
         <Text style={styles.pokeName}>{pokemon.name}</Text>
         <Text style={styles.pokeIndex}>
           #{pokemon.game_indices[0].game_index}

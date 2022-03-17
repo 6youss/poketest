@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     marginVertical: 20,
   },
   pokeImage: {
-    width: '100%',
+    width: 130,
     height: 130,
   },
   pokeName: {
