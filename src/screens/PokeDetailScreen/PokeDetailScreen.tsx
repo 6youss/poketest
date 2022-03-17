@@ -1,18 +1,10 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Animated, {FadeIn, FadeInLeft} from 'react-native-reanimated';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {SharedElement} from 'react-navigation-shared-element';
-import {PokeRadarChart} from '../../components';
+import {GoBackHeader, PokeRadarChart} from '../../components';
 import {ScreensParamList} from '../../navigation/Router';
 type PokeDetailScreenProps = NativeStackScreenProps<
   ScreensParamList,
@@ -24,7 +16,6 @@ export const PokeDetailScreen: React.FC<PokeDetailScreenProps> = ({
   route,
 }) => {
   const pokemon = route.params;
-  const {top} = useSafeAreaInsets();
   return (
     <View>
       <Animated.View
@@ -32,24 +23,11 @@ export const PokeDetailScreen: React.FC<PokeDetailScreenProps> = ({
         style={{...StyleSheet.absoluteFill, backgroundColor: '#DDD'}}
       />
       <ScrollView>
-        <View
-          style={{
-            paddingTop: top,
-            width: '100%',
-            paddingHorizontal: 30,
-            paddingVertical: 15,
-          }}>
-          <Pressable
-            style={{padding: 7}}
-            onPress={() => {
-              navigation.goBack();
-            }}>
-            <Image
-              source={require('../../assets/back.png')}
-              style={{width: 25, height: 25}}
-            />
-          </Pressable>
-        </View>
+        <GoBackHeader
+          onGoBack={() => {
+            navigation.goBack();
+          }}
+        />
         <View style={{paddingHorizontal: 30}}>
           <Text
             style={{
