@@ -3,3 +3,4 @@ export * from './PokemonsListItem';
 export * from './RadioInput';
 export * from './BottomModal';
 export * from './OptionsButton';
+export * from './PokeRadarChart';

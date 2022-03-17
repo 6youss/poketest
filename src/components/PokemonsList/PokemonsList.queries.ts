@@ -25,11 +25,30 @@ export interface GameIndex {
   };
 }
 
+export interface PokemonType {
+  slot: number;
+  type: {
+    name: string;
+    url: string;
+  };
+}
+
+export interface PokemonStat {
+  base_stat: number;
+  effort: number;
+  stat: {
+    name: string;
+    url: string;
+  };
+}
+
 export interface Pokemon {
   id: number;
   name: string;
   sprites: PokemonSprites;
   game_indices: GameIndex[];
+  types: PokemonType[];
+  stats: PokemonStat[];
 }
 
 export async function fetchOnePokemon(url: string) {

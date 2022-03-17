@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, FlatList} from 'react-native';
+import {ActivityIndicator, FlatList, ListRenderItem} from 'react-native';
 import {PokemonsListItem} from '../PokemonsListItem';
 import {
   GameIndexSortOptions,
@@ -24,6 +24,17 @@ export const PokemonsList: React.FC<PokemonsListProps> = ({
     return <ActivityIndicator size={30} />;
   };
 
+  const renderItem: ListRenderItem<Pokemon> = ({item}) => {
+    return (
+      <PokemonsListItem
+        key={item.id}
+        pokemon={item!}
+        style={styles.renderItem}
+        onPress={onPokemonPress}
+      />
+    );
+  };
+
   return (
     <>
       <FlatList
@@ -32,15 +43,7 @@ export const PokemonsList: React.FC<PokemonsListProps> = ({
         contentContainerStyle={styles.contentContainerStyle}
         columnWrapperStyle={styles.columnWrapperStyle}
         numColumns={2}
-        renderItem={({item}) => {
-          return (
-            <PokemonsListItem
-              pokemon={item!}
-              style={styles.renderItem}
-              onPress={onPokemonPress}
-            />
-          );
-        }}
+        renderItem={renderItem}
         onEndReached={() => {
           fetchNextPage();
         }}
