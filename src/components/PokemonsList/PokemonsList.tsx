@@ -1,5 +1,6 @@
 import React from 'react';
-import {ActivityIndicator, FlatList, ListRenderItem} from 'react-native';
+import {FlatList, ListRenderItem, View} from 'react-native';
+import {PokeLoader} from '../PokeLoader';
 import {PokemonsListItem} from '../PokemonsListItem';
 import {
   GameIndexSortOptions,
@@ -17,11 +18,11 @@ export const PokemonsList: React.FC<PokemonsListProps> = ({
   gameIndexSortValue,
   onPokemonPress = () => {},
 }) => {
-  const {pokemons, isFetchingNextPage, fetchNextPage} =
+  const {pokemons, isLoading, isFetchingNextPage, fetchNextPage} =
     usePaginatedPokemons(gameIndexSortValue);
 
-  const renderSpinner = () => {
-    return <ActivityIndicator size={30} />;
+  const renderLoader = () => {
+    return <PokeLoader />;
   };
 
   const renderItem: ListRenderItem<Pokemon> = ({item}) => {
@@ -37,18 +38,22 @@ export const PokemonsList: React.FC<PokemonsListProps> = ({
 
   return (
     <>
-      <FlatList
-        data={pokemons}
-        keyExtractor={item => 'pokemon-' + item?.id}
-        contentContainerStyle={styles.contentContainerStyle}
-        columnWrapperStyle={styles.columnWrapperStyle}
-        numColumns={2}
-        renderItem={renderItem}
-        onEndReached={() => {
-          fetchNextPage();
-        }}
-        ListFooterComponent={isFetchingNextPage ? renderSpinner : null}
-      />
+      {isLoading ? (
+        <View style={styles.loaderContainer}>{renderLoader()}</View>
+      ) : (
+        <FlatList
+          data={pokemons}
+          keyExtractor={item => 'pokemon-' + item?.id}
+          contentContainerStyle={styles.contentContainerStyle}
+          columnWrapperStyle={styles.columnWrapperStyle}
+          numColumns={2}
+          renderItem={renderItem}
+          onEndReached={() => {
+            fetchNextPage();
+          }}
+          ListFooterComponent={isFetchingNextPage ? renderLoader : null}
+        />
+      )}
     </>
   );
 };

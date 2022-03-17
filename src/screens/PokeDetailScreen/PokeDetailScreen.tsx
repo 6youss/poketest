@@ -66,7 +66,7 @@ export const PokeDetailScreen: React.FC<PokeDetailScreenProps> = ({
           {pokemon.types.map((t, index) => {
             return (
               <Animated.View
-                entering={FadeInLeft.delay((index + 1) * 200)}
+                entering={FadeInLeft.delay((index + 1) * 300)}
                 key={t.slot}
                 style={{
                   padding: 7,
@@ -87,21 +87,46 @@ export const PokeDetailScreen: React.FC<PokeDetailScreenProps> = ({
             <FastImage
               source={{uri: pokemon.sprites.front_default}}
               resizeMode="cover"
-              style={{width: 270, height: 270}}
+              style={{width: 250, height: 250}}
             />
           </SharedElement>
         </View>
 
         <View
           style={{
-            height: 3000,
             backgroundColor: 'white',
             padding: 30,
             borderTopEndRadius: 25,
             borderTopStartRadius: 25,
           }}>
-          <View style={{flex: 1, alignItems: 'center'}}>
-            <PokeRadarChart stats={pokemon.stats} width={330} />
+          <View style={{marginBottom: 20}}>
+            <Text
+              style={{
+                fontSize: 17,
+                fontWeight: '500',
+
+                marginBottom: 15,
+              }}>
+              Overview
+            </Text>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{marginVertical: 7, color: '#666'}}>Height</Text>
+              <Text style={{fontWeight: 'bold', marginStart: 20}}>
+                {pokemon.height}
+              </Text>
+            </View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={{marginVertical: 7, color: '#666'}}>Weight</Text>
+              <Text style={{fontWeight: 'bold', marginStart: 20}}>
+                {pokemon.weight}
+              </Text>
+            </View>
+          </View>
+          <View style={{marginBottom: 20}}>
+            <Text style={{fontSize: 17, fontWeight: '500'}}>Base Stats</Text>
+            <View style={{flex: 1, alignItems: 'center'}}>
+              <PokeRadarChart stats={pokemon.stats} width={330} />
+            </View>
           </View>
         </View>
       </ScrollView>
