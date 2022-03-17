@@ -17,7 +17,7 @@ Welcome to the Pokédex app.
 - [react-query](https://react-query.tanstack.com/) for networking.
 - [jest](https://facebook.github.io/jest/) and [react-native-testing-library](https://callstack.github.io/react-native-testing-library/) for testing.
 
-### Using scripts from console
+## Using scripts from console
 
 Before running the scripts, install the dependecies with `npm install`
 and for ios: `cd ios && pod install`
