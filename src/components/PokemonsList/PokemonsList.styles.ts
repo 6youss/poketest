@@ -10,4 +10,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  retryBtn: {
+    padding: 20,
+    backgroundColor: '#DDD',
+    marginTop: 60,
+    borderRadius: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  errorOccuredTxt: {color: '#333', fontWeight: 'bold', marginTop: 30},
 });

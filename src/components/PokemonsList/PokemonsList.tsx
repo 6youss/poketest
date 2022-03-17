@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  FlatList,
-  Image,
-  ListRenderItem,
-  Pressable,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, ListRenderItem, View} from 'react-native';
 import {PokeLoader} from '../PokeLoader';
 import {PokemonsListItem} from '../PokemonsListItem';
+import {ErrorView} from './ErrorView';
 import {
   GameIndexSortOptions,
   Pokemon,
@@ -49,52 +43,32 @@ export const PokemonsList: React.FC<PokemonsListProps> = ({
     );
   };
 
+  if (isLoading) {
+    return <View style={styles.fillCentered}>{renderLoader()}</View>;
+  }
+
   if (error) {
     return (
-      <View style={styles.fillCentered}>
-        <Image
-          source={require('../../assets/pikachu.png')}
-          style={{width: 130, height: 130}}
-        />
-        <Text style={{color: '#333', fontWeight: 'bold', marginTop: 30}}>
-          Oops ! an error has occured
-        </Text>
-        <Pressable
-          onPress={() => {
-            refetch();
-          }}
-          style={{
-            padding: 20,
-            backgroundColor: '#DDD',
-            marginTop: 60,
-            borderRadius: 15,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Text style={{fontWeight: 'bold'}}>Tap to retry</Text>
-        </Pressable>
-      </View>
+      <ErrorView
+        onRetry={() => {
+          refetch();
+        }}
+      />
     );
   }
 
   return (
-    <>
-      {isLoading ? (
-        <View style={styles.fillCentered}>{renderLoader()}</View>
-      ) : (
-        <FlatList
-          data={pokemons}
-          keyExtractor={item => 'pokemon-' + item?.id}
-          contentContainerStyle={styles.contentContainerStyle}
-          columnWrapperStyle={styles.columnWrapperStyle}
-          numColumns={2}
-          renderItem={renderItem}
-          onEndReached={() => {
-            fetchNextPage();
-          }}
-          ListFooterComponent={isFetchingNextPage ? renderLoader : null}
-        />
-      )}
-    </>
+    <FlatList
+      data={pokemons}
+      keyExtractor={item => 'pokemon-' + item?.id}
+      contentContainerStyle={styles.contentContainerStyle}
+      columnWrapperStyle={styles.columnWrapperStyle}
+      numColumns={2}
+      renderItem={renderItem}
+      onEndReached={() => {
+        fetchNextPage();
+      }}
+      ListFooterComponent={isFetchingNextPage ? renderLoader : null}
+    />
   );
 };

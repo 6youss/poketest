@@ -55,7 +55,7 @@ export const PokelistScreen: React.FC<PokelistScreenProps> = ({navigation}) => {
 
   return (
     <>
-      <View style={{paddingTop: top}}>
+      <View style={{paddingTop: top, flex: 1}}>
         <View style={[styles.headerContainer]}>
           <Text style={styles.title}>Poketest</Text>
           <OptionsButton

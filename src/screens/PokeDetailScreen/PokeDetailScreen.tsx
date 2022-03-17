@@ -21,7 +21,7 @@ export const PokeDetailScreen: React.FC<PokeDetailScreenProps> = ({
 }) => {
   const pokemon = route.params;
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Animated.View
         entering={FadeIn.duration(600)}
         style={styles.pokeFadeFill}
