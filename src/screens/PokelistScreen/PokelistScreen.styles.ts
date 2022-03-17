@@ -9,4 +9,6 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   title: {fontSize: 30},
+  sortByTxt: {marginBottom: 30, fontSize: 17, fontWeight: '500'},
+  sortInputContainer: {width: '100%'},
 });
