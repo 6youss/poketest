@@ -53,15 +53,15 @@ export interface Pokemon {
   weight: number;
 }
 
+export interface PaginatedPokemons {
+  pagination: Pagination;
+  pokemons: Pokemon[];
+}
+
 export async function fetchOnePokemon(url: string) {
   const res = await fetch(url);
   const pokemon: Pokemon = await res.json();
   return pokemon;
-}
-
-export interface PaginatedPokemons {
-  pagination: Pagination;
-  pokemons: Pokemon[];
 }
 
 async function fetchPokemons(url: string): Promise<PaginatedPokemons> {
@@ -95,6 +95,11 @@ export function usePaginatedPokemons(indexSortValue?: GameIndexSortOptions) {
   };
 }
 
+/**
+ * Sorting the pokemons on the front-end because of the API limitation
+ * (didn't find any sorting options in the documentions)
+ * The ideal was to call the API with sorting param
+ */
 function sortPokemons(
   pokemons: Pokemon[],
   gameIndexSortValue?: GameIndexSortOptions,

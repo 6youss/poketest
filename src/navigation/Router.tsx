@@ -3,6 +3,7 @@ import {createSharedElementStackNavigator} from 'react-navigation-shared-element
 import {Pokemon} from '../components/PokemonsList/PokemonsList.queries';
 import {PokeDetailScreen, PokelistScreen} from '../screens';
 import {TransitionPresets} from '@react-navigation/stack';
+
 export type ScreensParamList = {
   PokelistScreen: undefined;
   PokeDetailScreen: Pokemon;

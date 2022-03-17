@@ -7,6 +7,7 @@ import {
   VictoryTheme,
 } from 'victory-native';
 import {PokemonStat} from '../PokemonsList/PokemonsList.queries';
+import {capitalizeFirstLetter} from './capitalizeFirstLetter';
 
 interface PokeRadarChartProps extends VictoryChartProps {
   stats: PokemonStat[];
@@ -49,7 +50,3 @@ export const PokeRadarChart: React.FC<PokeRadarChartProps> = ({
     </VictoryChart>
   );
 };
-
-function capitalizeFirstLetter(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
