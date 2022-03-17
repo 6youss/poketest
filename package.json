@@ -48,6 +48,9 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFiles": [
+      "<rootDir>/jest/setup.js"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -55,6 +58,9 @@
       "jsx",
       "json",
       "node"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!victory|react-native-svg|@react-native|react-native|@react-navigation|react-navigation-shared-element)"
     ],
     "moduleNameMapper": {
       ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
