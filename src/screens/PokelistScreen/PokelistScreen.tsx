@@ -1,3 +1,4 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import {
@@ -6,10 +7,19 @@ import {
   PokemonsList,
   RadioInput,
 } from '../../components';
-import {GameIndexSortOptions} from '../../components/PokemonsList/PokemonsList.queries';
+import {
+  GameIndexSortOptions,
+  Pokemon,
+} from '../../components/PokemonsList/PokemonsList.queries';
+import {ScreensParamList} from '../../navigation/Router';
 import {styles} from './PokelistScreen.styles';
 
-export const PokelistScreen = () => {
+type PokelistScreenProps = NativeStackScreenProps<
+  ScreensParamList,
+  'PokelistScreen'
+>;
+
+export const PokelistScreen: React.FC<PokelistScreenProps> = ({navigation}) => {
   const [filtersVisible, setFiltersVisible] = React.useState(false);
   const [gameIndexSortValue, setGameIndexSortValue] =
     React.useState<GameIndexSortOptions>();
@@ -24,6 +34,12 @@ export const PokelistScreen = () => {
       setFiltersVisible(false);
     },
     [gameIndexSortValue],
+  );
+  const handlePokemonPress = React.useCallback(
+    (pokemon: Pokemon) => {
+      navigation.navigate('PokeDetailScreen', pokemon);
+    },
+    [navigation],
   );
 
   const SORT_OPTIONS = React.useMemo(() => {
@@ -48,7 +64,10 @@ export const PokelistScreen = () => {
             }}
           />
         </View>
-        <PokemonsList gameIndexSortValue={gameIndexSortValue} />
+        <PokemonsList
+          gameIndexSortValue={gameIndexSortValue}
+          onPokemonPress={handlePokemonPress}
+        />
         <BottomModal
           visible={filtersVisible}
           onClose={() => {

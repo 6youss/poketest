@@ -3,16 +3,19 @@ import {ActivityIndicator, FlatList} from 'react-native';
 import {PokemonsListItem} from '../PokemonsListItem';
 import {
   GameIndexSortOptions,
+  Pokemon,
   usePaginatedPokemons,
 } from './PokemonsList.queries';
 import {styles} from './PokemonsList.styles';
 
 interface PokemonsListProps {
   gameIndexSortValue?: GameIndexSortOptions;
+  onPokemonPress?: (pokemon: Pokemon) => void;
 }
 
 export const PokemonsList: React.FC<PokemonsListProps> = ({
   gameIndexSortValue,
+  onPokemonPress = () => {},
 }) => {
   const {pokemons, isFetchingNextPage, fetchNextPage} =
     usePaginatedPokemons(gameIndexSortValue);
@@ -30,7 +33,13 @@ export const PokemonsList: React.FC<PokemonsListProps> = ({
         columnWrapperStyle={styles.columnWrapperStyle}
         numColumns={2}
         renderItem={({item}) => {
-          return <PokemonsListItem pokemon={item!} style={styles.renderItem} />;
+          return (
+            <PokemonsListItem
+              pokemon={item!}
+              style={styles.renderItem}
+              onPress={onPokemonPress}
+            />
+          );
         }}
         onEndReached={() => {
           fetchNextPage();
