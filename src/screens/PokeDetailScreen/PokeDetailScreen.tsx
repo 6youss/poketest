@@ -1,11 +1,15 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import Animated, {FadeIn, FadeInLeft} from 'react-native-reanimated';
+import Animated, {FadeIn} from 'react-native-reanimated';
 import {SharedElement} from 'react-navigation-shared-element';
-import {GoBackHeader, PokeRadarChart} from '../../components';
+import {GoBackHeader, PokeRadarChart, PokeTypesList} from '../../components';
 import {ScreensParamList} from '../../navigation/Router';
+import {InfoTitle} from './InfoTitle';
+import {OverviewItem} from './OverviewItem';
+import {styles} from './PokeDetailScreen.styles';
+
 type PokeDetailScreenProps = NativeStackScreenProps<
   ScreensParamList,
   'PokeDetailScreen'
@@ -20,7 +24,7 @@ export const PokeDetailScreen: React.FC<PokeDetailScreenProps> = ({
     <View>
       <Animated.View
         entering={FadeIn.duration(600)}
-        style={{...StyleSheet.absoluteFill, backgroundColor: '#DDD'}}
+        style={styles.pokeFadeFill}
       />
       <ScrollView>
         <GoBackHeader
@@ -29,37 +33,9 @@ export const PokeDetailScreen: React.FC<PokeDetailScreenProps> = ({
           }}
         />
         <View style={{paddingHorizontal: 30}}>
-          <Text
-            style={{
-              textTransform: 'capitalize',
-              fontSize: 26,
-              fontWeight: 'bold',
-            }}>
-            {pokemon.name}
-          </Text>
+          <Text style={styles.pokeName}>{pokemon.name}</Text>
         </View>
-        <ScrollView
-          horizontal
-          contentContainerStyle={{paddingHorizontal: 30, paddingVertical: 15}}>
-          {pokemon.types.map((t, index) => {
-            return (
-              <Animated.View
-                entering={FadeInLeft.delay((index + 1) * 300)}
-                key={t.slot}
-                style={{
-                  padding: 7,
-                  paddingHorizontal: 20,
-                  marginEnd: 15,
-                  backgroundColor: '#FFFA',
-                  borderRadius: 15,
-                  minWidth: 50,
-                  alignItems: 'center',
-                }}>
-                <Text style={{textTransform: 'capitalize'}}>{t.type.name}</Text>
-              </Animated.View>
-            );
-          })}
-        </ScrollView>
+        <PokeTypesList types={pokemon.types} />
         <View style={{alignItems: 'center'}}>
           <SharedElement id={`pokemon.${pokemon.id}.photo`}>
             <FastImage
@@ -70,39 +46,15 @@ export const PokeDetailScreen: React.FC<PokeDetailScreenProps> = ({
           </SharedElement>
         </View>
 
-        <View
-          style={{
-            backgroundColor: 'white',
-            padding: 30,
-            borderTopEndRadius: 25,
-            borderTopStartRadius: 25,
-          }}>
+        <View style={styles.infosContainer}>
           <View style={{marginBottom: 20}}>
-            <Text
-              style={{
-                fontSize: 17,
-                fontWeight: '500',
-
-                marginBottom: 15,
-              }}>
-              Overview
-            </Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{marginVertical: 7, color: '#666'}}>Height</Text>
-              <Text style={{fontWeight: 'bold', marginStart: 20}}>
-                {pokemon.height}
-              </Text>
-            </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{marginVertical: 7, color: '#666'}}>Weight</Text>
-              <Text style={{fontWeight: 'bold', marginStart: 20}}>
-                {pokemon.weight}
-              </Text>
-            </View>
+            <InfoTitle>Overview</InfoTitle>
+            <OverviewItem title="Height" value={pokemon.height.toString()} />
+            <OverviewItem title="Weight" value={pokemon.weight.toString()} />
           </View>
           <View style={{marginBottom: 20}}>
-            <Text style={{fontSize: 17, fontWeight: '500'}}>Base Stats</Text>
-            <View style={{flex: 1, alignItems: 'center'}}>
+            <InfoTitle>Base Stats</InfoTitle>
+            <View style={styles.radarChartContainer}>
               <PokeRadarChart stats={pokemon.stats} width={330} />
             </View>
           </View>

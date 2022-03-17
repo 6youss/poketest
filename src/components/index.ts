@@ -6,3 +6,4 @@ export * from './OptionsButton';
 export * from './PokeRadarChart';
 export * from './PokeLoader';
 export * from './GoBackHeader';
+export * from './PokeTypesList';

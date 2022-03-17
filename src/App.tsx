@@ -10,7 +10,11 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <>
-      <StatusBar translucent backgroundColor={'transparent'} />
+      <StatusBar
+        translucent
+        backgroundColor={'transparent'}
+        barStyle="dark-content"
+      />
       <SafeAreaProvider>
         <QueryClientProvider client={queryClient}>
           <NavigationContainer>

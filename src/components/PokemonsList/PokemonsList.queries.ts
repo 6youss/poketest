@@ -49,6 +49,8 @@ export interface Pokemon {
   game_indices: GameIndex[];
   types: PokemonType[];
   stats: PokemonStat[];
+  height: number;
+  weight: number;
 }
 
 export async function fetchOnePokemon(url: string) {

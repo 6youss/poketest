@@ -1,6 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
   BottomModal,
   OptionsButton,
@@ -23,7 +24,7 @@ export const PokelistScreen: React.FC<PokelistScreenProps> = ({navigation}) => {
   const [filtersVisible, setFiltersVisible] = React.useState(false);
   const [gameIndexSortValue, setGameIndexSortValue] =
     React.useState<GameIndexSortOptions>();
-
+  const {top} = useSafeAreaInsets();
   const handleFiltersChange = React.useCallback(
     value => {
       if (value === gameIndexSortValue) {
@@ -54,8 +55,8 @@ export const PokelistScreen: React.FC<PokelistScreenProps> = ({navigation}) => {
 
   return (
     <>
-      <SafeAreaView>
-        <View style={styles.headerContainer}>
+      <View style={{paddingTop: top}}>
+        <View style={[styles.headerContainer]}>
           <Text style={styles.title}>Poketest</Text>
           <OptionsButton
             active={!!gameIndexSortValue}
@@ -82,7 +83,7 @@ export const PokelistScreen: React.FC<PokelistScreenProps> = ({navigation}) => {
             />
           </View>
         </BottomModal>
-      </SafeAreaView>
+      </View>
     </>
   );
 };

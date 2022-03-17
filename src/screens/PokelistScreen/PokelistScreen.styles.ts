@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 30,
-    paddingVertical: 10,
+    paddingVertical: 15,
   },
   title: {fontSize: 30},
   sortByTxt: {marginBottom: 30, fontSize: 17, fontWeight: '500'},

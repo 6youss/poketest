@@ -1,5 +1,12 @@
 import React from 'react';
-import {FlatList, ListRenderItem, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  ListRenderItem,
+  Pressable,
+  Text,
+  View,
+} from 'react-native';
 import {PokeLoader} from '../PokeLoader';
 import {PokemonsListItem} from '../PokemonsListItem';
 import {
@@ -18,8 +25,14 @@ export const PokemonsList: React.FC<PokemonsListProps> = ({
   gameIndexSortValue,
   onPokemonPress = () => {},
 }) => {
-  const {pokemons, isLoading, isFetchingNextPage, fetchNextPage} =
-    usePaginatedPokemons(gameIndexSortValue);
+  const {
+    pokemons,
+    isLoading,
+    isFetchingNextPage,
+    error,
+    refetch,
+    fetchNextPage,
+  } = usePaginatedPokemons(gameIndexSortValue);
 
   const renderLoader = () => {
     return <PokeLoader />;
@@ -36,10 +49,38 @@ export const PokemonsList: React.FC<PokemonsListProps> = ({
     );
   };
 
+  if (error) {
+    return (
+      <View style={styles.fillCentered}>
+        <Image
+          source={require('../../assets/pikachu.png')}
+          style={{width: 130, height: 130}}
+        />
+        <Text style={{color: '#333', fontWeight: 'bold', marginTop: 30}}>
+          Oops ! an error has occured
+        </Text>
+        <Pressable
+          onPress={() => {
+            refetch();
+          }}
+          style={{
+            padding: 20,
+            backgroundColor: '#DDD',
+            marginTop: 60,
+            borderRadius: 15,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Text style={{fontWeight: 'bold'}}>Tap to retry</Text>
+        </Pressable>
+      </View>
+    );
+  }
+
   return (
     <>
       {isLoading ? (
-        <View style={styles.loaderContainer}>{renderLoader()}</View>
+        <View style={styles.fillCentered}>{renderLoader()}</View>
       ) : (
         <FlatList
           data={pokemons}
